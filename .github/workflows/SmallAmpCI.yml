@@ -22,7 +22,7 @@ jobs:
     strategy:
       matrix:
         portion: [1,2]
-    name: SmallAmp Number ${{ matrix.portion }}
+    name: Job number ${{ strategy.job-index }}
     steps:
       - uses: actions/checkout@v2
       - uses: hpi-swa/setup-smalltalkCI@v1
