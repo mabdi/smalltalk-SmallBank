@@ -33,11 +33,11 @@ jobs:
         shell: bash
         timeout-minutes: 15
       - uses: mabdi/smallamp-action@main
-      - run: ls -al
-        shell: bash
       - run: smallAmpCI 
         shell: bash
         env:
           # you can also use: ${{ matrix.portion }}
           SMALLAMP_PORTION: ${{ strategy.job-index }} 
           SMALLAMP_ALLJOBS: ${{ strategy.job-total }}
+      - run: ls -al ${{SMALLTALK_CI_BUILD_BASE}}
+        shell: bash
