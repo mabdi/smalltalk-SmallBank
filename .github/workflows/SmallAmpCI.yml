@@ -33,6 +33,8 @@ jobs:
         shell: bash
         timeout-minutes: 15
       - uses: mabdi/smallamp-action@main
+      - run: ls -al
+        shell: bash
       - run: smallAmpCI 
         shell: bash
         env:
