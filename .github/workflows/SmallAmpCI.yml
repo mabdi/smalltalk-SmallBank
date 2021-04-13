@@ -39,5 +39,5 @@ jobs:
           # you can also use: ${{ matrix.portion }}
           SMALLAMP_PORTION: ${{ strategy.job-index }} 
           SMALLAMP_ALLJOBS: ${{ strategy.job-total }}
-      - run: ls -al $SMALLTALK_CI_BUILD_BASE
+      - run: ls -al ${{ env.SMALLTALK_CI_BUILD_BASE }}
         shell: bash
