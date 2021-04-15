@@ -32,5 +32,8 @@ SmallBank >> rand [
 { #category : #accessing }
 SmallBank >> withdraw: amount [
 	balance >= amount
-		ifTrue: [ balance := balance - amount ]
+		ifTrue: [ 
+			balance := balance - amount.
+			^ true ].
+	^ false
 ]
