@@ -28,7 +28,7 @@ jobs:
       - uses: hpi-swa/setup-smalltalkCI@v1
         id: smalltalkci
         with:
-          smalltalk-version: Pharo64-9.0
+          smalltalk-version: Pharo64-8.0
       - run: smalltalkci -s ${{ steps.smalltalkci.outputs.smalltalk-version }}
         shell: bash
         timeout-minutes: 15
@@ -42,6 +42,8 @@ jobs:
           SMALLAMP_PORTION: ${{ strategy.job-index }} 
           SMALLAMP_ALLJOBS: ${{ strategy.job-total }}
       - run: pwd
+        shell: bash
+      - run: ls -al
         shell: bash
       - run: git branch 
         shell: bash
