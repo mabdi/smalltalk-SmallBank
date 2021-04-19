@@ -33,6 +33,8 @@ jobs:
         shell: bash
         timeout-minutes: 15
       - uses: mabdi/smallamp-action@main
+      - run: git checkout -b ${{ env.SMALLAMP_BRANCH_NAME }}
+        shell: bash
       - run: smallAmpCI 
         shell: bash
         env:
