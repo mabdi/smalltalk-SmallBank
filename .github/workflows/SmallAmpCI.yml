@@ -25,8 +25,6 @@ jobs:
     name: Job number ${{ strategy.job-index }}
     steps:
       - uses: actions/checkout@v2
-      - run: git checkout -b "$(printf 'SmallAmp-%s' ${{env.GITHUB_RUN_NUMBER}} )"
-        shell: bash
       - uses: hpi-swa/setup-smalltalkCI@v1
         id: smalltalkci
         with:
