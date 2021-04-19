@@ -41,7 +41,9 @@ jobs:
           # you can also use: ${{ matrix.portion }}
           SMALLAMP_PORTION: ${{ strategy.job-index }} 
           SMALLAMP_ALLJOBS: ${{ strategy.job-total }}
-      - run: ls -al ${{ env.SMALLTALK_CI_BUILD_BASE }}
+      - run: git branch 
+        shell: bash
+      - run: git status
         shell: bash
       - run: env
         shell: bash
