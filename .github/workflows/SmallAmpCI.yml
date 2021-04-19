@@ -41,7 +41,8 @@ jobs:
           SMALLAMP_ALLJOBS: ${{ strategy.job-total }}
       - run: ls -al ${{ env.SMALLTALK_CI_BUILD_BASE }}
         shell: bash
+      - run: env
+        shell: bash
       - run: |
           git config user.name mabdi
-          git push -u origin smallamp-run-${{ env.GITHUB_RUN_NUMBER }}
-
+          git push -u origin HEAD
