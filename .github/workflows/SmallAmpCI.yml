@@ -43,6 +43,8 @@ jobs:
           SMALLAMP_ALLJOBS: ${{ strategy.job-total }}
       - run: git branch 
         shell: bash
+      - run: git branch 
+        shell: bash
       - run: git status
         shell: bash
       - run: env
