@@ -45,7 +45,7 @@ jobs:
         shell: bash
       - run: ls ${{ env.SMALLTALK_CI_BUILD }} -al
         shell: bash
-      - run: ls ${{ env.SMALLTALK_CI_BUILD }}/pharo-local -al
+      - run: ls ${{ env.SMALLTALK_CI_BUILD }}/pharo-local/iceberg/mabdi -al
         shell: bash        
       - run: ls -al
         shell: bash
