@@ -44,6 +44,8 @@ jobs:
       - run: pwd
         shell: bash
       - run: ls ${{ env.SMALLTALK_CI_BUILD }} -al
+        shell: bash
+      - run: ls ${{ env.SMALLTALK_CI_BUILD }}/pharo-local -al
         shell: bash        
       - run: ls -al
         shell: bash
