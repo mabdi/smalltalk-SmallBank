@@ -43,6 +43,8 @@ jobs:
           SMALLAMP_ALLJOBS: ${{ strategy.job-total }}
       - run: pwd
         shell: bash
+      - run: ls ${{ env.SMALLTALK_CI_BUILD }} -al
+        shell: bash        
       - run: ls -al
         shell: bash
       - run: git branch 
