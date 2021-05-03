@@ -45,8 +45,9 @@ jobs:
         shell: bash
       - run: ls ${{ env.SMALLTALK_CI_BUILD }} -al
         shell: bash
-      - run: ls ${{ env.SMALLTALK_CI_BUILD }}/pharo-local/iceberg/mabdi -al
-        shell: bash        
+      - run: git status
+        shell: bash  
+        working-directory: ${{ env.SMALLTALK_CI_BUILD }}/pharo-local/iceberg/mabdi/smalltalk-SmallBank
       - run: ls -al
         shell: bash
       - run: git branch 
