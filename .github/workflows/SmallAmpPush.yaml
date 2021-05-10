@@ -5,6 +5,8 @@ name: SmallAmpPush
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   reponame: ${{github.event.repository.name}}
+  #run_number: ${{ github.event.workflow_run.run_number }}
+  run_number: 54
 
 on:
   workflow_dispatch:
@@ -18,8 +20,6 @@ jobs:
     #if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
       - uses: actions/checkout@v2
-      - run: git checkout -b TestAmplificationPush
-        shell: bash
       - uses: hpi-swa/setup-smalltalkCI@v1
         id: smalltalkci
         with:
@@ -35,7 +35,7 @@ jobs:
           # Required, workflow file name or ID
           workflow: SmallAmpCI.yml
           workflow_conclusion: success
-          run_number: 54
+          run_number: ${{ env.run_number }}
           path: ${{ env.SMALLTALK_CI_BUILD_BASE }}
       - run: pwd; cd smallAmp-results*; ls -al; find . -name "*.zip" -exec unzip {} \;; ls -al; mv *.st ..
         shell: bash 
@@ -43,6 +43,8 @@ jobs:
       - run: curl https://raw.githubusercontent.com/mabdi/small-amp/master/scripts/installer.st -o installer.st
         shell: bash 
         working-directory: ${{ env.SMALLTALK_CI_BUILD_BASE }}
+        env:
+          RUN_NUMBER: github.event.workflow_run.conclusion 
       - run: pwd; ls -al; ${{ env.SMALLTALK_CI_VM }} TravisCI.image st --save --quit installer.st
         shell: bash
         working-directory: ${{ env.SMALLTALK_CI_BUILD_BASE }}
