@@ -37,7 +37,8 @@ jobs:
           # Required, workflow file name or ID
           workflow: SmallAmpCI.yml
           workflow_conclusion: success
-          path: ${{ . }}
+          run_number: 54
+          path: .
       - run: curl https://raw.githubusercontent.com/mabdi/small-amp/master/scripts/installer.st -o installer.st
         shell: bash 
       - run: ${{ env.SMALLTALK_CI_VM }} TravisCI.image st --save --quit installer.st
