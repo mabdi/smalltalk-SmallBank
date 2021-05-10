@@ -41,6 +41,8 @@ jobs:
           path: .
       - run: curl https://raw.githubusercontent.com/mabdi/small-amp/master/scripts/installer.st -o installer.st
         shell: bash 
+      - run: pwd; ls -al
+        shell: bash 
       - run: ${{ env.SMALLTALK_CI_VM }} TravisCI.image st --save --quit installer.st
         shell: bash
       - run: cd ${{ env.GITHUB_WORKSPACE }}
