@@ -37,7 +37,7 @@ jobs:
           workflow_conclusion: success
           run_number: 54
           path: ${{ env.SMALLTALK_CI_BUILD_BASE }}
-      - run: pwd; ls -al; unzip smallAmp-results*.zip ; unzip *_job_*.zip; ls -al
+      - run: pwd; ls -al; unzip smallAmp-results* ; unzip *_job_*.zip; ls -al
         shell: bash 
         working-directory: ${{ env.SMALLTALK_CI_BUILD_BASE }}
       - run: curl https://raw.githubusercontent.com/mabdi/small-amp/master/scripts/installer.st -o installer.st
