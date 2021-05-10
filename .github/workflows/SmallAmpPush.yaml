@@ -21,7 +21,7 @@ jobs:
     #if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
       - uses: actions/checkout@v2
-      - run: git checkout -b TestAmplificationPush
+      - run: git checkout -b ${{ env.branch_name }}
         shell: bash
       - uses: hpi-swa/setup-smalltalkCI@v1
         id: smalltalkci
