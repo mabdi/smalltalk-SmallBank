@@ -1,0 +1,58 @@
+# This is a basic workflow to help you get started with Actions
+
+name: SmallAmpPush
+
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  reponame: ${{github.event.repository.name}}
+
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows: ["TestAmplification"]
+    types: [completed]
+
+jobs:
+  TestAmplificationPush:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    steps:
+      - uses: actions/checkout@v2
+      - run: git checkout -b TestAmplificationPush
+        shell: bash
+      - uses: hpi-swa/setup-smalltalkCI@v1
+        id: smalltalkci
+        with:
+          smalltalk-version: Pharo64-8.0
+      - run: smalltalkci -s ${{ steps.smalltalkci.outputs.smalltalk-version }}
+        shell: bash
+        timeout-minutes: 15
+      - run: cd ${{ env.SMALLTALK_CI_BUILD_BASE }}
+        shell: bash
+      - name: Download artifacts
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          # Optional, GitHub token
+          #github_token: ${{secrets.GITHUB_TOKEN}}
+          # Required, workflow file name or ID
+          workflow: SmallAmpCI.yml
+          workflow_conclusion: success
+          path: ${{ . }}
+      - run: curl https://raw.githubusercontent.com/mabdi/small-amp/master/scripts/installer.st -o installer.st
+        shell: bash 
+      - run: ${{ env.SMALLTALK_CI_VM }} TravisCI.image st --save --quit installer.st
+        shell: bash
+      - run: cd ${{ env.GITHUB_WORKSPACE }}
+        shell: bash     
+      - run: git status
+        shell: bash  
+        #  working-directory: ${{ env.SMALLTALK_CI_BUILD }}/pharo-local/iceberg/mabdi/smalltalk-SmallBank
+      - run: git branch 
+        shell: bash
+      - run: git status
+        shell: bash
+      - run: env
+        shell: bash
+      - run: |
+          git config user.name mabdi
+          git push -u origin HEAD
