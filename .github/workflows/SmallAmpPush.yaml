@@ -27,8 +27,6 @@ jobs:
       - run: smalltalkci -s ${{ steps.smalltalkci.outputs.smalltalk-version }}
         shell: bash
         timeout-minutes: 15
-      - run: cd ${{ env.SMALLTALK_CI_BUILD_BASE }}
-        shell: bash
       - name: Download artifacts
         uses: dawidd6/action-download-artifact@v2
         with:
@@ -38,15 +36,16 @@ jobs:
           workflow: SmallAmpCI.yml
           workflow_conclusion: success
           run_number: 54
-          path: .
+          path: ${{ env.SMALLTALK_CI_BUILD_BASE }}
+      - run: unzip smallAmp-results*.zip ; unzip *_job_*.zip; ls -al
+        shell: bash 
+        working-directory: ${{ env.SMALLTALK_CI_BUILD_BASE }}
       - run: curl https://raw.githubusercontent.com/mabdi/small-amp/master/scripts/installer.st -o installer.st
         shell: bash 
-      - run: pwd; ls -al
-        shell: bash 
-      - run: ${{ env.SMALLTALK_CI_VM }} TravisCI.image st --save --quit installer.st
+        working-directory: ${{ env.SMALLTALK_CI_BUILD_BASE }}
+      - run: pwd; ls -al; ${{ env.SMALLTALK_CI_VM }} TravisCI.image st --save --quit installer.st
         shell: bash
-      - run: cd ${{ env.GITHUB_WORKSPACE }}
-        shell: bash     
+        working-directory: ${{ env.SMALLTALK_CI_BUILD_BASE }}
       - run: git status
         shell: bash  
         #  working-directory: ${{ env.SMALLTALK_CI_BUILD }}/pharo-local/iceberg/mabdi/smalltalk-SmallBank
