@@ -9,8 +9,6 @@ env:
   #run_number: 54
   head_branch: ${{github.event.workflow_run.head_branch}}
   #head_branch: master
-  conclusion: ${{ github.event.workflow_run.conclusion}}
-  #conclusion: success
 
 on:
   workflow_dispatch:
@@ -21,7 +19,7 @@ on:
 jobs:
   TestAmplificationPush:
     runs-on: ubuntu-latest
-    if: ${{ env.conclusion == 'success' }}
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
       - uses: actions/checkout@v2
         with:
