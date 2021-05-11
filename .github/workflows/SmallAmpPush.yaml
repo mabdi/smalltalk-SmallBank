@@ -75,5 +75,5 @@ jobs:
                 '${{ env.reponame }}',
                 "[SmallAmp] amplified tests for action number ${{env.run_number}}",
                 "SmallAmp-${{env.run_number}}",
-                "${{github.event.workflow_run.head_branch}}",
+                "${{github.event.workflow_run.head_branch}}"
             });
