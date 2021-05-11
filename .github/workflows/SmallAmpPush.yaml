@@ -7,6 +7,8 @@ env:
   reponame: ${{github.event.repository.name}}
   #run_number: ${{ github.event.workflow_run.run_number }}
   run_number: 54
+  #head_branch: ${{github.event.workflow_run.head_branch}}
+  head_branch: master
 
 on:
   workflow_dispatch:
@@ -75,5 +77,5 @@ jobs:
                 '${{ env.reponame }}',
                 "[SmallAmp] amplified tests for action number ${{env.run_number}}",
                 "SmallAmp-${{env.run_number}}",
-                "${{github.event.workflow_run.head_branch}}"
+                "${{env.head_branch}}"
             });
