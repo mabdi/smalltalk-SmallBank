@@ -73,9 +73,9 @@ jobs:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
             github.pulls.create({
-                "mabdi",
-                '${{ env.reponame }}',
-                "[SmallAmp] amplified tests for action number ${{env.run_number}}",
-                "SmallAmp-${{env.run_number}}",
-                "${{env.head_branch}}"
+                owner: "mabdi",
+                repo: '${{ env.reponame }}',
+                title: "[SmallAmp] amplified tests for action number ${{env.run_number}}",
+                head: "SmallAmp-${{env.run_number}}",
+                base: "${{env.head_branch}}"
             });
