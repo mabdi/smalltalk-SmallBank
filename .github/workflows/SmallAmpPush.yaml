@@ -9,17 +9,19 @@ env:
   #run_number: 54
   head_branch: ${{github.event.workflow_run.head_branch}}
   #head_branch: master
+  conclusion: ${{ github.event.workflow_run.conclusion}}
+  #conclusion: success
 
 on:
   workflow_dispatch:
   workflow_run:
-    workflows: ["TestAmplification"]
+    workflows: ["SmallAmpCI"]
     types: [completed]
 
 jobs:
   TestAmplificationPush:
     runs-on: ubuntu-latest
-    #if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    if: ${{ env.conclusion == 'success' }}
     steps:
       - uses: actions/checkout@v2
         with:
