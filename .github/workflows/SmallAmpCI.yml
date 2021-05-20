@@ -2,7 +2,7 @@ name: SmallAmpCI
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   reponame: ${{github.event.repository.name}}
-  
+  base_ref: ${{ github.base_ref }}
 on:
   workflow_dispatch:
 
@@ -87,6 +87,6 @@ jobs:
                 repo: '${{ env.reponame }}',
                 title: "[SmallAmp] amplified tests for action number ${{github.run_number}}",
                 head: "SmallAmp-${{github.run_number}}",
-                base: "${{ github.base_ref }}",
+                base: "${{ env.base_ref }}",
                 body: "I submit this pull request to suggest new tests based on the output of SmallAmp tool."
             });
