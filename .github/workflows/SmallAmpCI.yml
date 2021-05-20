@@ -29,3 +29,53 @@ jobs:
           # you can also use: ${{ matrix.portion }}
           SMALLAMP_PORTION: ${{ strategy.job-index }} 
           SMALLAMP_ALLJOBS: ${{ strategy.job-total }}
+  TestAmplificationPush:
+    runs-on: ubuntu-latest
+    needs: TestAmplification
+    steps:
+      - uses: actions/checkout@v2
+        with:
+           fetch-depth: 0
+      - run: git checkout -b "SmallAmp-${{env.GITHUB_RUN_NUMBER}}"
+        shell: bash
+      - uses: hpi-swa/setup-smalltalkCI@v1
+        id: smalltalkci
+        with:
+          smalltalk-version: Pharo64-8.0
+      - run: smalltalkci -s ${{ steps.smalltalkci.outputs.smalltalk-version }}
+        shell: bash
+        timeout-minutes: 15
+      - name: Download artifacts
+        uses: actions/download-artifact@v2
+        with:
+          path: ${{ env.SMALLTALK_CI_BUILD_BASE }}
+      - run: cd smallAmp-results*; find . -name "*.zip" -exec unzip {} \;; mv *.st ..
+        shell: bash 
+        working-directory: ${{ env.SMALLTALK_CI_BUILD_BASE }}
+      - run: curl https://raw.githubusercontent.com/mabdi/small-amp/master/scripts/installer.st -o installer.st
+        shell: bash 
+        working-directory: ${{ env.SMALLTALK_CI_BUILD_BASE }}
+      - run: ${{ env.SMALLTALK_CI_VM }} TravisCI.image st --save --quit installer.st
+        shell: bash
+        working-directory: ${{ env.SMALLTALK_CI_BUILD_BASE }}
+      - run: git status
+        shell: bash  
+      - run: git branch 
+        shell: bash
+      - run: |
+          git config user.name mabdi
+          git add '*.st'
+          git commit -m '[SmallAmp] amplified tests added'
+          git push -u origin HEAD
+      - uses: actions/github-script@v4
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            github.pulls.create({
+                owner: "mabdi",
+                repo: '${{ env.reponame }}',
+                title: "[SmallAmp] amplified tests for action number ${{env.run_number}}",
+                head: "SmallAmp-${{env.run_number}}",
+                base: "${{env.head_branch}}",
+                body: "I submit this pull request to suggest new tests based on the output of SmallAmp tool."
+            });
