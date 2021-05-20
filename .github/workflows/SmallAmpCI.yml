@@ -2,7 +2,7 @@ name: SmallAmpCI
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   reponame: ${{github.event.repository.name}}
-
+  
 on:
   workflow_dispatch:
 
@@ -36,7 +36,7 @@ jobs:
       - uses: actions/checkout@v2
         with:
            fetch-depth: 0
-      - run: git checkout -b "SmallAmp-${{env.GITHUB_RUN_NUMBER}}"
+      - run: git checkout -b "SmallAmp-${{github.run_number}}"
         shell: bash
       - uses: hpi-swa/setup-smalltalkCI@v1
         id: smalltalkci
@@ -74,8 +74,8 @@ jobs:
             github.pulls.create({
                 owner: "mabdi",
                 repo: '${{ env.reponame }}',
-                title: "[SmallAmp] amplified tests for action number ${{env.GITHUB_RUN_NUMBER}}",
-                head: "SmallAmp-${{env.GITHUB_RUN_NUMBER}}",
-                base: "${{ github.event.workflow_run.head_branch }}",
+                title: "[SmallAmp] amplified tests for action number ${{github.run_number}}",
+                head: "SmallAmp-${{github.run_number}}",
+                base: "${{ github.base_ref }}",
                 body: "I submit this pull request to suggest new tests based on the output of SmallAmp tool."
             });
