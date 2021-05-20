@@ -74,8 +74,8 @@ jobs:
             github.pulls.create({
                 owner: "mabdi",
                 repo: '${{ env.reponame }}',
-                title: "[SmallAmp] amplified tests for action number ${{env.run_number}}",
-                head: "SmallAmp-${{env.run_number}}",
-                base: "${{env.head_branch}}",
+                title: "[SmallAmp] amplified tests for action number ${{env.GITHUB_RUN_NUMBER}}",
+                head: "SmallAmp-${{env.GITHUB_RUN_NUMBER}}",
+                base: "${{ github.event.workflow_run.head_branch }}",
                 body: "I submit this pull request to suggest new tests based on the output of SmallAmp tool."
             });
