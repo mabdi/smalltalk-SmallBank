@@ -55,7 +55,7 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: "smallAmp-overview-${{ env.reponame }}-run${{github.run_number}}"
-          path: ${{SMALLAMP_CI_HOME}}/overview-*.txt
+          path: ${{env.SMALLAMP_CI_HOME}}/overview-*.txt
       - name: Download artifacts
         uses: actions/download-artifact@v2
         with:
