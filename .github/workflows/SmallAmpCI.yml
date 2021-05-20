@@ -33,6 +33,10 @@ jobs:
     runs-on: ubuntu-latest
     needs: TestAmplification
     steps:
+      - name: Extract branch name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
       - uses: actions/checkout@v2
         with:
            fetch-depth: 0
@@ -87,6 +91,6 @@ jobs:
                 repo: '${{ env.reponame }}',
                 title: "[SmallAmp] amplified tests for action number ${{github.run_number}}",
                 head: "SmallAmp-${{github.run_number}}",
-                base: "${GITHUB_REF##*/}",
+                base: "${{ steps.extract_branch.outputs.branch }}",
                 body: "I submit this pull request to suggest new tests based on the output of SmallAmp tool."
             });
