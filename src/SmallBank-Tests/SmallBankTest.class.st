@@ -14,10 +14,91 @@ SmallBankTest >> testDeposit [
 	self assert: b balance equals: 110
 ]
 
+{ #category : #'as yet unclassified' }
+SmallBankTest >> testDeposit_amp [
+	"I test correctness of: 
+
+- `^ (1 to: 1000) atRandom` in method: `SmallBank >> #rand`
+
+"
+
+	<smallAmpCoveres: 'RemoveCaretOperator#SmallBank#rand#28#50'>
+	<madeBySmallAmp>
+	| b |
+	b := SmallBank new.
+	self assert: b rand class equals: SmallInteger.
+	b
+		deposit: 10;
+		deposit: 100
+]
+
+{ #category : #'as yet unclassified' }
+SmallBankTest >> testDeposit_amp_A10 [
+	"I test correctness of: 
+
+- `^ true` in method: `SmallBank >> #withdraw:`
+
+"
+
+	<smallAmpCoveres: 'RemoveCaretOperator#SmallBank#withdraw:#85#90'>
+	<madeBySmallAmp>
+	| b aTrue |
+	b := SmallBank new.
+	aTrue := b
+		deposit: 10;
+		deposit: 100;
+		withdraw: 30.
+	self assert: aTrue
+]
+
+{ #category : #'as yet unclassified' }
+SmallBankTest >> testDeposit_amp_A2 [
+	"I test correctness of: 
+
+- `balance >= amount
+	ifTrue: [ balance := balance - amount.
+		^ true ]` in method: `SmallBank >> #withdraw:` when {#balance->0. #amount->30}
+
+- `^ false` in method: `SmallBank >> #withdraw:`
+
+"
+
+	<smallAmpCoveres: 'ReplaceIfTrueReceiverWithTrueOperator#SmallBank#withdraw:#19#92'>
+	<madeBySmallAmp>
+	| b aFalse |
+	b := SmallBank new.
+	aFalse := b withdraw: 30.
+	self
+		assert: b balance equals: 0;
+		deny: aFalse.
+	b
+		deposit: 10;
+		deposit: 100
+]
+
 { #category : #tests }
 SmallBankTest >> testInit [
 	| b |
 	b := SmallBank new .self assert: b balance equals: 0
+]
+
+{ #category : #'as yet unclassified' }
+SmallBankTest >> testInit_amp_A2_A1_L9 [
+	"I test correctness of: 
+
+- `balance >= amount` in method: `SmallBank >> #withdraw:` when {#balance->10. #amount->10}
+
+"
+
+	<smallAmpCoveres:
+		'ReplaceGreaterOrEqualWithGreaterMutantOperator#SmallBank#withdraw:#19#35'>
+	<madeBySmallAmp>
+	| b |
+	b := SmallBank new.
+	b
+		deposit: 10;
+		withdraw: 10.
+	self assert: b balance equals: 0
 ]
 
 { #category : #tests }
