@@ -14,10 +14,72 @@ SmallBankTest >> testDeposit [
 	self assert: b balance equals: 110
 ]
 
+{ #category : #'as yet unclassified' }
+SmallBankTest >> testDeposit_amp [
+	<smallAmpCoveres: 'RemoveCaretOperator#SmallBank#rand#28#50'>
+	<madeBySmallAmp>
+	| b |
+	b := SmallBank new.
+	self assert: SmallBank asString equals: 'SmallBank'.
+	self assert: b class equals: SmallBank.
+	self assert: b balance equals: 0.
+	self assert: b rand class equals: SmallInteger.
+	b deposit: 10.
+	self assert: b class equals: SmallBank.
+	self assert: b balance equals: 10.
+	self assert: b rand class equals: SmallInteger.
+	b deposit: 100.
+	self assert: b class equals: SmallBank.
+	self assert: b balance equals: 110.
+	self assert: b rand class equals: SmallInteger
+]
+
+{ #category : #'as yet unclassified' }
+SmallBankTest >> testDeposit_amp_A8 [
+	<smallAmpCoveres: 'RemoveCaretOperator#SmallBank#withdraw:#85#90'>
+	<madeBySmallAmp>
+	| b tmp_aFlkTJ2twE3 |
+	b := SmallBank new.
+	self assert: SmallBank asString equals: 'SmallBank'.
+	self assert: b class equals: SmallBank.
+	self assert: b balance equals: 0.
+	self assert: b rand class equals: SmallInteger.
+	b deposit: 10.
+	self assert: b class equals: SmallBank.
+	self assert: b balance equals: 10.
+	self assert: b rand class equals: SmallInteger.
+	b deposit: 100.
+	self assert: b class equals: SmallBank.
+	self assert: b balance equals: 110.
+	self assert: b rand class equals: SmallInteger.
+	tmp_aFlkTJ2twE3 := b withdraw: 30.
+	self assert: b class equals: SmallBank.
+	self assert: b balance equals: 80.
+	self assert: b rand class equals: SmallInteger.
+	self assert: tmp_aFlkTJ2twE3
+]
+
 { #category : #tests }
 SmallBankTest >> testInit [
 	| b |
 	b := SmallBank new .self assert: b balance equals: 0
+]
+
+{ #category : #'as yet unclassified' }
+SmallBankTest >> testInit_amp_A0 [
+	<smallAmpCoveres: 'ReplaceIfTrueReceiverWithTrueOperator#SmallBank#withdraw:#19#92'>
+	<madeBySmallAmp>
+	| b tmp_l1plEAh3cO1 |
+	b := SmallBank new.
+	self assert: SmallBank asString equals: 'SmallBank'.
+	self assert: b class equals: SmallBank.
+	self assert: b balance equals: 0.
+	self assert: b rand class equals: SmallInteger.
+	tmp_l1plEAh3cO1 := b withdraw: 30.
+	self assert: b class equals: SmallBank.
+	self assert: b balance equals: 0.
+	self assert: b rand class equals: SmallInteger.
+	self deny: tmp_l1plEAh3cO1
 ]
 
 { #category : #tests }
@@ -28,4 +90,26 @@ SmallBankTest >> testWithdraw [
 	self assert: b balance equals: 100.
 	b withdraw: 30.
 	self assert: b balance equals: 70
+]
+
+{ #category : #'as yet unclassified' }
+SmallBankTest >> testWithdraw_amp_L4 [
+	<smallAmpCoveres:
+		'ReplaceGreaterOrEqualWithGreaterMutantOperator#SmallBank#withdraw:#19#35'>
+	<madeBySmallAmp>
+	| b tmp_1Cym3AKf0S2 |
+	b := SmallBank new.
+	self assert: SmallBank asString equals: 'SmallBank'.
+	self assert: b class equals: SmallBank.
+	self assert: b balance equals: 0.
+	self assert: b rand class equals: SmallInteger.
+	b deposit: 30.
+	self assert: b class equals: SmallBank.
+	self assert: b balance equals: 30.
+	self assert: b rand class equals: SmallInteger.
+	tmp_1Cym3AKf0S2 := b withdraw: 30.
+	self assert: b class equals: SmallBank.
+	self assert: b balance equals: 0.
+	self assert: b rand class equals: SmallInteger.
+	self assert: tmp_1Cym3AKf0S2
 ]
