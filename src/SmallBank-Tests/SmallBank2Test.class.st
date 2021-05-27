@@ -20,9 +20,38 @@ SmallBank2Test >> testInit [
 	self assert: b balance equals: 0
 ]
 
+{ #category : #'as yet unclassified' }
+SmallBank2Test >> testInit_amp_A2 [
+	<smallAmpCoveres:
+		'ReplaceIfTrueIfFalseReceiverWithTrueOperator#SmallBank2#withdraw:#19#109'>
+	<madeBySmallAmp>
+	| b |
+	b := SmallBank2 new.
+	self should: [ b withdraw: 30 ] raise: Error
+]
+
 { #category : #tests }
 SmallBank2Test >> testPercent [
 	SmallBank2 calculateRate: 10 amount: 1000
+]
+
+{ #category : #'as yet unclassified' }
+SmallBank2Test >> testPercent_amp [
+	"I test correctness of: 
+
+- `^ (anInt * aPercent / 100) asInteger` in method: `SmallBank2 class >> #calculateRate:amount:` when {#anInt->1000. #aPercent->10}
+
+"
+
+	<smallAmpCoveres:
+		'ReplaceMultiplicationWithDivisionMutantOperator#SmallBank2 class#calculateRate:amount:#119#134'>
+	<smallAmpCoveres: 'RemoveCaretOperator#SmallBank2 class#calculateRate:amount:#116#151'>
+	<smallAmpCoveres:
+		'ReplaceDivisionWithMultiplicationMutantOperator#SmallBank2 class#calculateRate:amount:#118#141'>
+	<madeBySmallAmp>
+	| anInteger |
+	anInteger := SmallBank2 calculateRate: 10 amount: 1000.
+	self assert: anInteger equals: 100
 ]
 
 { #category : #tests }
