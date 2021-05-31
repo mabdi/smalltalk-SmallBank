@@ -71,7 +71,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           path: ${{ env.SMALLTALK_CI_BUILD_BASE }}
-      - run: cd smallAmp-results*; find . -name "*.zip" -exec unzip {} \;; rm *.zip; mv * ..
+      - run: ls; cd smallAmp-results*; ls; find . -name "*.zip" -exec unzip {} \;; rm *.zip; mv * ..
         shell: bash 
         working-directory: ${{ env.SMALLTALK_CI_BUILD_BASE }}
       - run: python3 runner.py -r amp -d ${{ env.SMALLTALK_CI_BUILD_BASE }} -p ${{ env.reponame }} > overview-amp.txt
