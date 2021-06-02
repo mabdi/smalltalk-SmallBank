@@ -14,10 +14,54 @@ SmallBankTest >> testDeposit [
 	self assert: b balance equals: 110
 ]
 
+{ #category : #'as yet unclassified' }
+SmallBankTest >> testDeposit_amp [
+	<smallAmpCoveres: 'RemoveCaretOperator#SmallBank#rand#28#50'>
+	<madeBySmallAmp>
+	| b |
+	b := SmallBank new.
+	self
+		assert: b class equals: SmallBank;
+		assert: b rand class equals: SmallInteger.
+	b
+		deposit: 10;
+		deposit: 100
+]
+
+{ #category : #'as yet unclassified' }
+SmallBankTest >> testDeposit_amp_A7 [
+	<smallAmpCoveres: 'RemoveCaretOperator#SmallBank#withdraw:#96#102'>
+	<madeBySmallAmp>
+	| b aFalse |
+	b := SmallBank new.
+	aFalse := b
+		deposit: 10;
+		withdraw: 30.
+	self
+		assert: b class equals: SmallBank;
+		assert: b balance equals: 10;
+		deny: aFalse.
+	b deposit: 100
+]
+
 { #category : #tests }
 SmallBankTest >> testInit [
 	| b |
-	b := SmallBank new .self assert: b balance equals: 0
+	b := SmallBank new.
+	self assert: b balance equals: 0
+]
+
+{ #category : #'as yet unclassified' }
+SmallBankTest >> testInit_amp_A3_A3_A6 [
+	<smallAmpCoveres: 'RemoveCaretOperator#SmallBank#withdraw:#85#90'>
+	<madeBySmallAmp>
+	| b aTrue |
+	b := SmallBank new.
+	aTrue := b
+		withdraw: 30;
+		deposit: 100;
+		withdraw: 30.
+	self assert: aTrue
 ]
 
 { #category : #tests }
