@@ -17,7 +17,7 @@ on:
       mode:
         description: 'Mode (possible values: dspotSnapshots, dspot, diffSnapshots, diff)'
         required: true
-        default: 'snapshot'
+        default: 'diff'
         
 jobs:
   TestAmplification:
