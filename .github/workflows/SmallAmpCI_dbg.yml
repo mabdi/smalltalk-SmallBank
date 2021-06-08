@@ -1,0 +1,33 @@
+name: SmallAmpCIDbg
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  reponame: ${{github.event.repository.name}}
+
+on:
+  workflow_dispatch:
+    inputs:
+      iteration:
+        description: 'Maximum number of transformations applied to an original test method.'
+        required: true
+        default: '3'
+      maxInputs:
+        description: 'maximum number of inputs selected by the reducer'
+        required: true
+        default: '10'
+      mode:
+        description: 'Mode (possible values: dspotSnapshots, dspot, diffSnapshots, diff)'
+        required: true
+        default: 'diff'
+        
+jobs:
+  TestAmplificationSetup:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        portion: [1,2]
+    name: Job number ${{ strategy.job-index }}
+    steps:
+      - uses: mabdi/smallamp-action@reimp
+        with:
+          action: setup
+      
