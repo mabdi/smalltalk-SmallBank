@@ -24,7 +24,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        portion: [1,2]
+        portion: [1]
     name: Job number ${{ strategy.job-index }}
     steps:
       - uses: mabdi/smallamp-action@reimp
