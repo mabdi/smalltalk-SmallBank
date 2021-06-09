@@ -24,6 +24,10 @@ on:
 jobs:
   TestAmplification:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        portion: [1] # the content of array is not important, just the length
+    name: Job number ${{ strategy.job-index }}
     steps:
       - uses: actions/checkout@v2
         with:
