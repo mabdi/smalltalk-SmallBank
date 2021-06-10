@@ -56,6 +56,10 @@ jobs:
         with:
           action: setup
           smallamp-branch: action_reimp
+      - name: Download artifacts
+        uses: actions/download-artifact@v2
+        with:
+          path: ${{ env.PHARO_BASE }}
       - uses: mabdi/smallamp-action@reimp
         with:
           action: push
