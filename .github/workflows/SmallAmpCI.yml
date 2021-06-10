@@ -1,4 +1,4 @@
-name: SmallAmpCIDbg
+name: SmallAmp
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   reponame: ${{github.event.repository.name}}
