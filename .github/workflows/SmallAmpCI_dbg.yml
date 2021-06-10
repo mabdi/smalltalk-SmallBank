@@ -58,6 +58,6 @@ jobs:
           smallamp-branch: action_reimp
       - uses: mabdi/smallamp-action@reimp
         with:
-          action: amplify
+          action: push
           github-token: ${{secrets.GITHUB_TOKEN}}
           
