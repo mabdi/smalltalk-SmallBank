@@ -26,17 +26,16 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        portion: [1 , 2] # the content of array is not important, just the length
+        portion: [1 , 2] # Change me if you like. The content of array is not important, just the length
     name: Job number ${{ strategy.job-index }}
     steps:
       - uses: actions/checkout@v2
         with:
            fetch-depth: 0
-      - uses: mabdi/smallamp-action@reimp
+      - uses: mabdi/smallamp-action@main
         with:
           action: setup
-          smallamp-branch: action_reimp
-      - uses: mabdi/smallamp-action@reimp
+      - uses: mabdi/smallamp-action@main
         with:
           action: amplify
         env:
@@ -52,15 +51,14 @@ jobs:
       - uses: actions/checkout@v2
         with:
            fetch-depth: 0
-      - uses: mabdi/smallamp-action@reimp
+      - uses: mabdi/smallamp-action@main
         with:
           action: setup
-          smallamp-branch: action_reimp
       - name: Download artifacts
         uses: actions/download-artifact@v2
         with:
           path: ${{ env.PHARO_HOME }}
-      - uses: mabdi/smallamp-action@reimp
+      - uses: mabdi/smallamp-action@main
         with:
           action: push
           github-token: ${{secrets.GITHUB_TOKEN}}
