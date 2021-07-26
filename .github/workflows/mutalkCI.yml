@@ -29,25 +29,31 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Setup Smalltalk (I use Smalltalk CI setup)
-        run: echo Hello, world!
+      - uses: hpi-swa/setup-smalltalkCI@v1
+        id: smalltalkci
+        with:
+          smalltalk-version: Pharo64-stable
 
-      - name: Setup mutalk 
-        run: echo Hello, world!
+      - run: smalltalkci -s ${{ steps.smalltalkci.outputs.smalltalk-version }}
+        shell: bash
+        timeout-minutes: 15
 
-      - name: diff mutation testing
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
-
+      - run: pharo eval --save "Metacello new baseline: 'MuTalk'; repository: 'github://pavel-krivanek/mutalk/src'; load."
+        shell: bash
+      
+      - run: pharo mutalk --project=${{}} --diff
+        shell: bash
+        
   manual:
     runs-on: ubuntu-latest
     if: github.event_name == 'workflow_dispatch'
     steps:
       - uses: actions/checkout@v2
 
-      - name: Setup Smalltalk (I use Smalltalk CI setup)
-        run: echo Hello, world!
+      - uses: hpi-swa/setup-smalltalkCI@v1
+        id: smalltalkci
+        with:
+          smalltalk-version: Pharo64-stable
 
       - name: Setup mutalk 
         run: echo Hello, world!
