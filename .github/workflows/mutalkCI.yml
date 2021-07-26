@@ -41,7 +41,7 @@ jobs:
       - run: pharo eval --save "Metacello new baseline: 'MuTalk'; repository: 'github://pavel-krivanek/mutalk/src'; load."
         shell: bash
       
-      - run: pharo mutalk --project=${{}} --diff
+      - run: pharo mutalk --project=${{github.event.repository.name}} --diff
         shell: bash
         
   manual:
@@ -55,23 +55,21 @@ jobs:
         with:
           smalltalk-version: Pharo64-stable
 
-      - name: Setup mutalk 
-        run: echo Hello, world!
+      - run: smalltalkci -s ${{ steps.smalltalkci.outputs.smalltalk-version }}
+        shell: bash
+        timeout-minutes: 15
+        
+      - run: pharo eval --save "Metacello new baseline: 'MuTalk'; repository: 'github://pavel-krivanek/mutalk/src'; load."
+        shell: bash
 
       - name: full mutation testing
-        if: github.event.inputs == 'full'
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+        if: github.event.inputs.mode == 'full'
+        run: pharo mutalk --project=${{github.event.repository.name}} 
 
       - name: diff mutation testing
-        if: github.event.inputs == 'diff'
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+        if: github.event.inputs.mode == 'diff'
+        run: pharo mutalk --project=${{github.event.repository.name}}  --diff
 
       - name: commit mutation testing
-        if: github.event.inputs == 'commit'
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+        if: github.event.inputs.mode == 'commit'
+        run: pharo mutalk --project=${{github.event.repository.name}} --commit=${{github.event.inputs.commit}}
