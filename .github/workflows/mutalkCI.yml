@@ -1,0 +1,71 @@
+name: MutalkCI
+
+
+on:
+  push:
+    branches: [ master ]
+    paths:
+      - '**.st'
+  pull_request:
+    branches: [ master ]
+    paths:
+      - '**.st'
+
+  workflow_dispatch:
+    inputs:
+        mode:
+          description: 'modes: full (run on all project), diff (run on the last commit diff), commit (especify a commit to calculate diff)'
+          required: true
+          default: 'diff'
+        commit:
+          description: 'If mode == commit, here you enter the Commid id/name/shortId to evaluate the diff'
+          required: false
+          default: ''
+
+jobs:
+  eventBased:
+    runs-on: ubuntu-latest
+    if: github.event_name != 'workflow_dispatch'
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup Smalltalk (I use Smalltalk CI setup)
+        run: echo Hello, world!
+
+      - name: Setup mutalk 
+        run: echo Hello, world!
+
+      - name: diff mutation testing
+        run: |
+          echo Add other actions to build,
+          echo test, and deploy your project.
+
+  manual:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch'
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup Smalltalk (I use Smalltalk CI setup)
+        run: echo Hello, world!
+
+      - name: Setup mutalk 
+        run: echo Hello, world!
+
+      - name: full mutation testing
+        if: github.event.inputs == 'full'
+        run: |
+          echo Add other actions to build,
+          echo test, and deploy your project.
+
+      - name: diff mutation testing
+        if: github.event.inputs == 'diff'
+        run: |
+          echo Add other actions to build,
+          echo test, and deploy your project.
+
+      - name: commit mutation testing
+        if: github.event.inputs == 'commit'
+        run: |
+          echo Add other actions to build,
+          echo test, and deploy your project.
