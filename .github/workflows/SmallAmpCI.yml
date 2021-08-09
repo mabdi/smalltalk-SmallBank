@@ -4,22 +4,12 @@ env:
   reponame: ${{github.event.repository.name}}
   project_baseline: SmallBank
   project_directory: src
-  
+  iteration: 3
+  maxInputs: 10
+  mode: dspotFast
+
 on:
   workflow_dispatch:
-    inputs:
-      iteration:
-        description: 'Maximum number of transformations applied to an original test method.'
-        required: true
-        default: '3'
-      maxInputs:
-        description: 'maximum number of inputs selected by the reducer'
-        required: true
-        default: '10'
-      mode:
-        description: 'Mode (possible values: dspotSnapshots, dspot, diffSnapshots, diff)'
-        required: true
-        default: 'diff'
         
 jobs:
   TestAmplification:
@@ -41,9 +31,9 @@ jobs:
         env:
           SMALLAMP_PORTION: ${{ strategy.job-index }} 
           SMALLAMP_ALLJOBS: ${{ strategy.job-total }}
-          SMALLAMP_iteration: ${{ github.event.inputs.iteration }}
-          SMALLAMP_maxInputs: ${{ github.event.inputs.maxInputs }}
-          SMALLAMP_mode: ${{ github.event.inputs.mode }}  
+          SMALLAMP_iteration: ${{ env.iteration }}
+          SMALLAMP_maxInputs: ${{ env.maxInputs }}
+          SMALLAMP_mode: ${{ env.mode }}  
   TestAmplificationPush:
     runs-on: ubuntu-latest
     needs: TestAmplification
