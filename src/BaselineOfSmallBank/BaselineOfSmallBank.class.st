@@ -10,6 +10,7 @@ BaselineOfSmallBank >> baseline: spec [
 	spec
 		for: #common
 		do: [ spec package: 'SmallBank'.
+			spec package: 'SmallAmpCI-Tests'.
 			spec
 				package: 'SmallBank-Tests'
 				with: [ spec requires: #('SmallBank') ] ]
