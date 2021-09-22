@@ -4,6 +4,11 @@ Class {
 	#category : #'SmallAmpCI-Tests'
 }
 
+{ #category : #'as yet unclassified' }
+FakeFreezingTest class >> smallAmpTargetClasses [
+	^ {FakeObjectUnderTest}
+]
+
 { #category : #tests }
 FakeFreezingTest >> testFreezeMe [
 	FakeObjectUnderTest new doFreeze:1
