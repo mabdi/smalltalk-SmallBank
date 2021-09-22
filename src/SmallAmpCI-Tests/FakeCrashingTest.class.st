@@ -4,6 +4,11 @@ Class {
 	#category : #'SmallAmpCI-Tests'
 }
 
+{ #category : #'as yet unclassified' }
+FakeCrashingTest class >> smallAmpTargetClasses [
+	^ {FakeObjectUnderTest}
+]
+
 { #category : #tests }
 FakeCrashingTest >> testCrashMe [
 	FakeObjectUnderTest new doCrash:1
