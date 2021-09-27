@@ -28,3 +28,8 @@ FakeObjectUnderTest >> doFreeze: anInt [
 FakeObjectUnderTest >> echo: obj [
 	^ obj
 ]
+
+{ #category : #'as yet unclassified' }
+FakeObjectUnderTest >> someAction: anInt [
+	anInt = 0 ifTrue: [ ^ 0 ] ifFalse: [ ^ 1 ]
+]

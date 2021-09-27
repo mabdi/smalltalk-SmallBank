@@ -13,3 +13,8 @@ FakeCrashingTest class >> smallAmpTargetClasses [
 FakeCrashingTest >> testCrashMe [
 	FakeObjectUnderTest new doCrash:1
 ]
+
+{ #category : #tests }
+FakeCrashingTest >> testSomeAction [
+	FakeObjectUnderTest new someAction: 1
+]

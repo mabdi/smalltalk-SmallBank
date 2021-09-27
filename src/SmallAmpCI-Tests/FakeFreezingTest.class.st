@@ -20,3 +20,8 @@ FakeFreezingTest >> testFreezeMe2 [
 	f := FakeObjectUnderTest new.
 	(f echo: 1) = 0 ifTrue: [ self timeLimit: -1 asSeconds. ]
 ]
+
+{ #category : #tests }
+FakeFreezingTest >> testSomeAction [
+	FakeObjectUnderTest new someAction: 1
+]
