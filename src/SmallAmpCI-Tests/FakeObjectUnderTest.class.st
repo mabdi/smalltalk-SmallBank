@@ -11,7 +11,7 @@ FakeObjectUnderTest >> doCrash [
 
 { #category : #'as yet unclassified' }
 FakeObjectUnderTest >> doCrash: anInt [
-	anInt = 0 ifTrue: [ self doCrash  ]
+	anInt isZero ifTrue: [ self doCrash  ]
 ]
 
 { #category : #'as yet unclassified' }
@@ -21,7 +21,7 @@ FakeObjectUnderTest >> doFreeze [
 
 { #category : #'as yet unclassified' }
 FakeObjectUnderTest >> doFreeze: anInt [
-	anInt = 0 ifTrue: [ self doFreeze  ]
+	anInt isZero ifTrue: [ self doFreeze  ]
 ]
 
 { #category : #'as yet unclassified' }
