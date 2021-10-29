@@ -82,7 +82,7 @@ jobs:
             const fs = require('fs')
             //const core = require('@actions/core');
 
-            const linesstonfile = fs.readFileSync('.smalltalk.ston', 'utf8').split("\n")
+            const linesstonfile = fs.readFileSync('${{env.GITHUB_WORKSPACE}}/.smalltalk.ston', 'utf8').split("\n")
             for(var s in linesstonfile) {
                 if(s.trim().startsWith('#baseline')){
                     core.exportVariable('CI_baseline', s.trim().substring('#baseline : \''.length, s.length -2));
