@@ -86,19 +86,19 @@ jobs:
             for(var s of linesstonfile) {
                 //console.log(s)
                 if(s.trim().startsWith('#baseline')){
-                    const baseline = s.trim().substring('#baseline : \''.length, s.trim().length -3)
+                    const baseline = s.trim().substring('#baseline : \''.length, s.trim().length -2)
                     console.log(baseline)
                     core.exportVariable('CI_baseline', baseline);
                 }
                 if(s.trim().startsWith('#directory')){
-                    directory = s.trim().substring('#directory : \''.length, s.trim().length -3)
+                    directory = s.trim().substring('#directory : \''.length, s.trim().length -2)
                     console.log(directory)
                     core.exportVariable('CI_directory', directory);
                 }
             }
             
 
-      - run: ${{env.SMALLTALK_CI_VM}} ${{env.SMALLTALK_CI_IMAGE}} metacello install "github://${{env.GITHUB_REPOSITORY}}/${{env.CI_directory}}" BaselineOf${{env.CI_baseline}}
+      - run: ${{env.SMALLTALK_CI_VM}} ${{env.SMALLTALK_CI_IMAGE}} metacello install "github://$GITHUB_REPOSITORY/$CI_directory" BaselineOf${{env.CI_baseline}}
         shell: bash
 
       - run: smalltalkci -s ${{ steps.smalltalkci.outputs.smalltalk-version }}
