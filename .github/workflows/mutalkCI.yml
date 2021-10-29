@@ -97,13 +97,12 @@ jobs:
                 }
             }
             
-
-      - run: ${{env.SMALLTALK_CI_VM}} ${{env.SMALLTALK_CI_IMAGE}} metacello install "github://$GITHUB_REPOSITORY/$CI_directory" BaselineOf${{env.CI_baseline}}
-        shell: bash
-
       - run: smalltalkci -s ${{ steps.smalltalkci.outputs.smalltalk-version }}
         shell: bash
         timeout-minutes: 15
+
+      - run: ${{env.SMALLTALK_CI_VM}} ${{env.SMALLTALK_CI_IMAGE}} metacello install "github://$GITHUB_REPOSITORY/$CI_directory" BaselineOf${{env.CI_baseline}}
+        shell: bash
         
       - run: ${{env.SMALLTALK_CI_VM}} ${{env.SMALLTALK_CI_IMAGE}} metacello install "github://mabdi/mutalk/src" BaselineOfMuTalk
         shell: bash
