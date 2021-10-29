@@ -49,7 +49,7 @@ jobs:
           name: mutation-testing-output
           path: ${{env.SMALLTALK_CI_BUILD_BASE}}/__mutalk_export.json
 
-      - id: push json
+      - id: pushjson
         uses: actions/github-script@v4
         with:
           script: |
@@ -75,7 +75,7 @@ jobs:
         with:
           smalltalk-version: Pharo64-stable
 
-      - id: push json
+      - id: parseston
         uses: actions/github-script@v4
         with:
           script: |
