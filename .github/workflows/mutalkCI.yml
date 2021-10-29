@@ -86,12 +86,12 @@ jobs:
             for(var s of linesstonfile) {
                 //console.log(s)
                 if(s.trim().startsWith('#baseline')){
-                    const baseline = s.trim().substring('#baseline : \''.length, s.length -3)
+                    const baseline = s.trim().substring('#baseline : \''.length, s.trim().length -3)
                     console.log(baseline)
                     core.exportVariable('CI_baseline', baseline);
                 }
                 if(s.trim().startsWith('#directory')){
-                    directory = s.trim().substring('#directory : \''.length, s.length -3)
+                    directory = s.trim().substring('#directory : \''.length, s.trim().length -3)
                     console.log(directory)
                     core.exportVariable('CI_directory', directory);
                 }
