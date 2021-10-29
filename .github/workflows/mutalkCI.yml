@@ -16,7 +16,7 @@ on:
         mode:
           description: 'modes: full (run on all project), diff (run on the last commit diff), commit (especify a commit to calculate diff)'
           required: true
-          default: 'diff'
+          default: 'full'
         commit:
           description: 'If mode == commit, here you enter the Commid id/name/shortId to evaluate the diff'
           required: false
@@ -133,11 +133,11 @@ jobs:
         with:
           script: |
             const fs = require('fs')
-            const rq = require('request')
+            const request = require('request')
 
             const data = fs.readFileSync(process.env.SMALLTALK_CI_BUILD_BASE + '/__mutalk_export.json', 'utf8')
             const url = 'https://mutation-testing-coverage.herokuapp.com/api/v1/jobs/'
-            rq.request.post({
+            request.post({
                 url: url,
                 body: data,
                 json: true
