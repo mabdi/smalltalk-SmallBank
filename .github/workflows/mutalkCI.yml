@@ -84,11 +84,16 @@ jobs:
 
             const linesstonfile = fs.readFileSync(process.env.GITHUB_WORKSPACE + '/.smalltalk.ston', 'utf8').split("\n")
             for(var s in linesstonfile) {
+                console.log(s)
                 if(s.trim().startsWith('#baseline')){
-                    core.exportVariable('CI_baseline', s.trim().substring('#baseline : \''.length, s.length -2));
+                    const baseline = s.trim().substring('#baseline : \''.length, s.length -2)
+                    console.log(baseline)
+                    core.exportVariable('CI_baseline', baseline);
                 }
                 if(s.trim().startsWith('#directory')){
-                    core.exportVariable('CI_directory', s.trim().substring('#directory : \''.length, s.length -2));
+                    directory = s.trim().substring('#directory : \''.length, s.length -2)
+                    console.log(directory)
+                    core.exportVariable('CI_directory', directory);
                 }
             }
             
