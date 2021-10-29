@@ -83,7 +83,7 @@ jobs:
             //const core = require('@actions/core');
 
             const linesstonfile = fs.readFileSync(process.env.GITHUB_WORKSPACE + '/.smalltalk.ston', 'utf8').split("\n")
-            for(var s in linesstonfile) {
+            for(var s of linesstonfile) {
                 console.log(s)
                 if(s.trim().startsWith('#baseline')){
                     const baseline = s.trim().substring('#baseline : \''.length, s.length -2)
