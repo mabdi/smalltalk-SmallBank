@@ -53,8 +53,8 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: 14
-      - run: npm ci
-      # or one-off:
+
+
       - run: npm install request
       - id: pushjson
         uses: actions/github-script@v4
@@ -126,8 +126,7 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: 14
-      - run: npm ci
-      # or one-off:
+
       - run: npm install request
       - id: pushjson
         uses: actions/github-script@v4
