@@ -133,11 +133,11 @@ jobs:
         with:
           script: |
             const fs = require('fs')
-            import request, { Response } from 'request';
+            const rq = require('request')
 
             const data = fs.readFileSync(process.env.SMALLTALK_CI_BUILD_BASE + '/__mutalk_export.json', 'utf8')
             const url = 'https://mutation-testing-coverage.herokuapp.com/api/v1/jobs/'
-            request.post({
+            rq.request.post({
                 url: url,
                 body: data,
                 json: true
