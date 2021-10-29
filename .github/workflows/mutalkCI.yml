@@ -93,7 +93,7 @@ jobs:
             }
             
 
-      - run: ${{env.SMALLTALK_CI_VM}} ${{env.SMALLTALK_CI_IMAGE}} metacello install "github://${{env.GITHUB_REPOSITORY}}/src" BaselineOfMuTalk
+      - run: ${{env.SMALLTALK_CI_VM}} ${{env.SMALLTALK_CI_IMAGE}} metacello install "github://${{env.GITHUB_REPOSITORY}}/${{env.CI_directory}}" BaselineOf${{env.CI_baseline}}
         shell: bash
 
       - run: smalltalkci -s ${{ steps.smalltalkci.outputs.smalltalk-version }}
