@@ -54,7 +54,7 @@ jobs:
         with:
           script: |
             const fs = require('fs')
-            const data = fs.readFileSync('${{env.SMALLTALK_CI_BUILD_BASE}}/__mutalk_export.json', 'utf8')
+            const data = fs.readFileSync(process.env.SMALLTALK_CI_BUILD_BASE + '/__mutalk_export.json', 'utf8')
             const url = 'https://mutation-testing-coverage.herokuapp.com/api/v1/jobs/'
             fetch(url, {
                 method: 'POST', 
@@ -82,7 +82,7 @@ jobs:
             const fs = require('fs')
             //const core = require('@actions/core');
 
-            const linesstonfile = fs.readFileSync('${{env.GITHUB_WORKSPACE}}/.smalltalk.ston', 'utf8').split("\n")
+            const linesstonfile = fs.readFileSync(process.env.GITHUB_WORKSPACE + '/.smalltalk.ston', 'utf8').split("\n")
             for(var s in linesstonfile) {
                 if(s.trim().startsWith('#baseline')){
                     core.exportVariable('CI_baseline', s.trim().substring('#baseline : \''.length, s.length -2));
