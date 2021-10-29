@@ -78,28 +78,6 @@ jobs:
         id: smalltalkci
         with:
           smalltalk-version: Pharo64-stable
-
-      - id: parseston
-        uses: actions/github-script@v4
-        with:
-          script: |
-            const fs = require('fs')
-            //const core = require('@actions/core');
-
-            const linesstonfile = fs.readFileSync(process.env.GITHUB_WORKSPACE + '/.smalltalk.ston', 'utf8').split("\n")
-            for(var s of linesstonfile) {
-                //console.log(s)
-                if(s.trim().startsWith('#baseline')){
-                    const baseline = s.trim().substring('#baseline : \''.length, s.trim().length -2)
-                    console.log(baseline)
-                    core.exportVariable('CI_baseline', baseline);
-                }
-                if(s.trim().startsWith('#directory')){
-                    directory = s.trim().substring('#directory : \''.length, s.trim().length -2)
-                    console.log(directory)
-                    core.exportVariable('CI_directory', directory);
-                }
-            }
             
       - run: smalltalkci -s ${{ steps.smalltalkci.outputs.smalltalk-version }}
         shell: bash
@@ -124,3 +102,18 @@ jobs:
         with:
           name: mutation-testing-output
           path: ${{env.SMALLTALK_CI_BUILD_BASE}}/__mutalk_export.json
+
+      - id: pushjson
+        uses: actions/github-script@v4
+        with:
+          script: |
+            const fs = require('fs')
+            const data = fs.readFileSync(process.env.SMALLTALK_CI_BUILD_BASE + '/__mutalk_export.json', 'utf8')
+            const url = 'https://mutation-testing-coverage.herokuapp.com/api/v1/jobs/'
+            fetch(url, {
+                method: 'POST', 
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+              });
