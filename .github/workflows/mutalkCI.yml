@@ -80,7 +80,7 @@ jobs:
         with:
           script: |
             const fs = require('fs')
-            const core = require('@actions/core');
+            //const core = require('@actions/core');
 
             const linesstonfile = fs.readFileSync('.smalltalk.ston', 'utf8').split("\n")
             for(var s in linesstonfile) {
