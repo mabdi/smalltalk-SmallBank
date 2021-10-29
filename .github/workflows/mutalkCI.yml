@@ -49,6 +49,21 @@ jobs:
           name: mutation-testing-output
           path: ${{env.SMALLTALK_CI_BUILD_BASE}}/__mutalk_export.json
 
+      - id: push json
+        uses: actions/github-script@v4
+        with:
+          script: |
+            const fs = require('fs')
+            const data = fs.readFileSync('${{env.SMALLTALK_CI_BUILD_BASE}}/__mutalk_export.json', 'utf8')
+            const url = 'https://mutation-testing-coverage.herokuapp.com/api/v1/jobs/'
+            fetch(url, {
+                method: 'POST', 
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+              });
+         
   manual:
     runs-on: ubuntu-latest
     if: github.event_name == 'workflow_dispatch'
@@ -59,6 +74,27 @@ jobs:
         id: smalltalkci
         with:
           smalltalk-version: Pharo64-stable
+
+      - id: push json
+        uses: actions/github-script@v4
+        with:
+          script: |
+            const fs = require('fs')
+            const core = require('@actions/core');
+
+            const linesstonfile = fs.readFileSync('.smalltalk.ston', 'utf8').split("\n")
+            for(var s in linesstonfile) {
+                if(s.trim().startsWith('#baseline')){
+                    core.exportVariable('CI_baseline', s.trim().substring('#baseline : \''.length, s.length -2));
+                }
+                if(s.trim().startsWith('#directory')){
+                    core.exportVariable('CI_directory', s.trim().substring('#directory : \''.length, s.length -2));
+                }
+            }
+            
+
+      - run: ${{env.SMALLTALK_CI_VM}} ${{env.SMALLTALK_CI_IMAGE}} metacello install "github://${{env.GITHUB_REPOSITORY}}/src" BaselineOfMuTalk
+        shell: bash
 
       - run: smalltalkci -s ${{ steps.smalltalkci.outputs.smalltalk-version }}
         shell: bash
