@@ -137,10 +137,11 @@ jobs:
 
             const data = JSON.parse(fs.readFileSync(process.env.SMALLTALK_CI_BUILD_BASE + '/__mutalk_export.json', 'utf8'))
             const url = 'https://mutation-testing-coverage.herokuapp.com/api/v1/jobs/'
-            var myHeaders = new Headers();
-            myHeaders.append('x-api-key', ${{ secrets.MUTALKCI_API_KEY }});
             request.post({
                 url: url,
+                headers: {
+                    'x-api-key': ${{ secrets.MUTALKCI_API_KEY }}
+                  },
                 body: data,
                 json: true
               }, (error , _response , data) => {
