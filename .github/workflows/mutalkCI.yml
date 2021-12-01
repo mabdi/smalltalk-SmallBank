@@ -130,6 +130,8 @@ jobs:
       - run: npm install request
       - id: pushjson
         uses: actions/github-script@v4
+        env:
+          MUTALKCI_API_KEY: ${{ secrets.MUTALKCI_API_KEY }}
         with:
           script: |
             const fs = require('fs')
@@ -140,7 +142,7 @@ jobs:
             request.post({
                 url: url,
                 headers: {
-                    'x-api-key': ${{ secrets.MUTALKCI_API_KEY }}
+                    'x-api-key': process.env.MUTALKCI_API_KEY
                   },
                 body: data,
                 json: true
