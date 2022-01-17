@@ -5,7 +5,8 @@ env:
   project_baseline: SmallBank
   project_directory: src
   iteration: 3
-  mode: dspotFast
+
+
 
 on:
   workflow_dispatch:
@@ -14,24 +15,39 @@ on:
         description: 'TestClasses to amplify (comma separated) empty-> all'
         required: false
         default: ''
+      mode:
+        description: 'mode (dspot, dspotFast, dspotFastRank)'
+        required: true
+        default: 'dspotFast'
       parallel_jobs:         
         description: 'Max number of all parallel jobs'
         required: true
-        default: '8'
+        default: '16'
       maxInputs:
         description: 'Number of test variant per original test'
         required: true
         default: '10'
-      timeBudget:
-        description: 'Number of minutes as time budget (0 means no limit)'
+      shreds:
+        description: 'Maximum number of methods per test class (0 means no shreding)'
         required: true
-        default: '0'        
+        default: '20'
+      timeBudget:
+        description: 'Number of minutes as time budget per test class (0 means no limit)'
+        required: true
+        default: '6'        
 jobs:
   MatrixBuild:
     runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.set-matrix.outputs.result }}
     steps:
+      - name: configurations 
+        run: | 
+          echo "testClasses -> ${{github.event.inputs.testClasses}}"
+          echo "mode -> ${{github.event.inputs.mode}}"
+          echo "parallel_jobs -> ${{github.event.inputs.parallel_jobs}}"
+          echo "maxInputs -> ${{github.event.inputs.maxInputs}}"
+          echo "timeBudget -> ${{github.event.inputs.timeBudget}}"          
       - id: set-matrix
         uses: actions/github-script@v4
         env:
@@ -70,7 +86,8 @@ jobs:
           SMALLAMP_ALLJOBS: ${{ strategy.job-total }}
           SMALLAMP_iteration: ${{ env.iteration }}
           SMALLAMP_maxInputs: ${{ github.event.inputs.maxInputs }}
-          SMALLAMP_mode: ${{ env.mode }}  
+          SMALLAMP_SHREDS: ${{ github.event.inputs.shreds }}
+          SMALLAMP_mode: ${{ github.event.inputs.mode }}  
           SMALLAMP_timeBudget: ${{ github.event.inputs.timeBudget }}
           SMALLAMP_testClasses: ${{ github.event.inputs.testClasses }}
 
@@ -92,4 +109,11 @@ jobs:
         with:
           action: push
           github-token: ${{secrets.GITHUB_TOKEN}}
-          
+        env:
+          iteration: ${{ env.iteration }}
+          maxInputs: ${{ github.event.inputs.maxInputs }}
+          shreds: ${{ github.event.inputs.shreds }}
+          mode: ${{ github.event.inputs.mode }}  
+          timeBudget: ${{ github.event.inputs.timeBudget }}
+          testClasses: ${{ github.event.inputs.testClasses }}
+          parallel_jobs: ${{ github.event.inputs.parallel_jobs }}
