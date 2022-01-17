@@ -34,7 +34,7 @@ on:
       timeBudget:
         description: 'Number of minutes as time budget per test class (0 means no limit)'
         required: true
-        default: '6'        
+        default: '1'        
 jobs:
   MatrixBuild:
     runs-on: ubuntu-latest
