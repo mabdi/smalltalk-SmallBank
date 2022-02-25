@@ -5,9 +5,12 @@ env:
   project_baseline: SmallBank
   project_directory: src
   iteration: 3
-
-
-
+  SMALLAMP_NOPUSH: PUSH
+  SMALLAMP_MaxCrash: 10
+  # check image freeze each 4*60 sec: a normal test method has a 3 minute time out
+  SMALLAMP_freezeTimeOut: 120 
+  SmallAmp_ShredSeed: ${{ github.run_id}}  
+  
 on:
   workflow_dispatch:
     inputs:
@@ -18,11 +21,11 @@ on:
       mode:
         description: 'mode (dspot, dspotFast, dspotFastRank)'
         required: true
-        default: 'dspotFast'
+        default: 'dspotFastRank'
       parallel_jobs:         
-        description: 'Max number of all parallel jobs'
+        description: 'Max number of all parallel jobs (0 use Input testClasses length)'
         required: true
-        default: '16'
+        default: '2'
       maxInputs:
         description: 'Number of test variant per original test'
         required: true
@@ -30,11 +33,11 @@ on:
       shreds:
         description: 'Maximum number of methods per test class (0 means no shreding)'
         required: true
-        default: '20'
+        default: '15'
       timeBudget:
         description: 'Number of minutes as time budget per test class (0 means no limit)'
         required: true
-        default: '1'        
+        default: '5'
 jobs:
   MatrixBuild:
     runs-on: ubuntu-latest
@@ -56,9 +59,11 @@ jobs:
         with:
           script: |
             l = parseInt(process.env.parallel_jobs)
-            if(process.env.testClasses){
-              if (process.env.testClasses.split(',').length < l )
-                l = process.env.testClasses.split(',').length
+            if(l==0){
+              if(process.env.testClasses){
+                if (process.env.testClasses.split(',').length < l )
+                  l = process.env.testClasses.split(',').length
+              }
             }
             a = Array.from({length: l}, (x, i) => {a:i});
             var o = {jobs: a};
