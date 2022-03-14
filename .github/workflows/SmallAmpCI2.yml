@@ -14,7 +14,7 @@ on:
 
 jobs:
   TestAmplification:
-    uses: TestAmplification/SmallAmpCI/.github/workflows/SmallAmpCI.yml@main
+    uses: mabdi/small-amp/.github/workflows/SmallAmpCI.yml@main
     with:
       testClasses: ${{github.event.inputs.testClasses }}
       parallel_jobs: ${{github.event.inputs.parallel_jobs}}
