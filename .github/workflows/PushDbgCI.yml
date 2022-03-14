@@ -1,0 +1,51 @@
+
+name: PushDbgCI
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  reponame: ${{github.event.repository.name}}
+  project_baseline: Roassal3
+  project_directory: src
+  iteration: 3
+
+on:
+  workflow_dispatch:
+    inputs:
+      run_number:
+        description: 'Run number: where to download the artifacts'
+        required: true
+        default: '91'
+jobs:
+  TestAmplificationPush:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+           fetch-depth: 0
+      - uses: mabdi/smallamp-action@main
+        with:
+          action: setup
+      - name: Download artifact from run ${{ github.event.inputs.run_number }}
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          # github_token: ${{secrets.GITHUB_TOKEN}}
+          # run_id: 1122334455
+          workflow: smallamp2.yml
+          run_number: ${{ github.event.inputs.run_number }}
+          # name: artifact_name
+          workflow_conclusion: ''
+          path: ${{ env.PHARO_HOME }}
+      - run: ls $PHARO_HOME    
+      - uses: mabdi/smallamp-action@main
+        with:
+          action: push
+          github-token: ${{secrets.GITHUB_TOKEN}}
+        env:
+          iteration: ${{ env.iteration }}
+          maxInputs: ${{ github.event.inputs.maxInputs }}
+          shreds: ${{ github.event.inputs.shreds }}
+          mode: ${{ github.event.inputs.mode }}  
+          timeBudget: ${{ github.event.inputs.timeBudget }}
+          testClasses: ${{ github.event.inputs.testClasses }}
+          parallel_jobs: ${{ github.event.inputs.parallel_jobs }}
+          SmallAmp_RUN_NUMBER: ${{ github.event.inputs.run_number }}
+          SMALLAMP_DashboardJson: CREATE
