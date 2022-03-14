@@ -20,6 +20,6 @@ jobs:
       parallel_jobs: ${{github.event.inputs.parallel_jobs}}
       input_project_baseline: SmallBank
       input_project_directory: src
-      SMALLAMP_DashboardJson: true
+      SMALLAMP_DashboardJson: CREATE
     secrets:
       secret_github_token: ${{secrets.GITHUB_TOKEN}}
