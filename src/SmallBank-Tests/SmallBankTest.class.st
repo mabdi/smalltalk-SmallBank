@@ -51,3 +51,24 @@ SmallBankTest >> testWithdraw_amp [
 		            withdraw: 30.
 	self assert: aBoolean
 ]
+
+{ #category : #'as yet unclassified' }
+SmallBankTest >> testWithdraw_amp_L17 [
+
+	"SmallAmp has derived this test from `SmallBankTest>>#testWithdraw` by applying some transformations and regenerating its assertions.
+	This test can cover this part:
+	*	In `SmallBank>> #withdraw:` from 19 to 35:
+		Operation: ReplaceGreaterOrEqualWithGreaterMutantOperator
+		Code snippet: `balance >= amount`
+		Dynamic state: {#balance->100. #amount->100}
+		Mutant id: ReplaceGreaterOrEqualWithGreaterMutantOperator#SmallBank#withdraw:#19#35
+"
+
+	<madeBySmallAmp>
+	| b |
+	b := SmallBank new.
+	b
+		deposit: 100;
+		withdraw: 100.
+	self assert: b balance equals: 0
+]
