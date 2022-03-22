@@ -29,3 +29,25 @@ SmallBankTest >> testWithdraw [
 	b withdraw: 30.
 	self assert: b balance equals: 70
 ]
+
+{ #category : #'as yet unclassified' }
+SmallBankTest >> testWithdraw_amp [
+
+	"SmallAmp has derived this test from `SmallBankTest>>#testWithdraw` by regenerating its assertions.
+	This test can cover this part:
+	*	In `SmallBank>> #withdraw:` from 85 to 90:
+		Operation: RemoveCaretOperator
+		Code snippet: `^ true`
+		Dynamic state: nil
+		Mutant id: RemoveCaretOperator#SmallBank#withdraw:#85#90
+"
+
+	<madeBySmallAmp>
+	| b aBoolean |
+	b := SmallBank new.
+	self assert: b rand class equals: SmallInteger.
+	aBoolean := b
+		            deposit: 100;
+		            withdraw: 30.
+	self assert: aBoolean
+]
