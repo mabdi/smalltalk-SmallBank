@@ -151,7 +151,7 @@ jobs:
                     throw new Error(error);
                   }
                   try {
-                    if (data.done) {
+                    if (data.status === "OK") {
                       core.setOutput('coveralls-api-result', JSON.stringify(data));
                     } else {
                       throw new Error(JSON.stringify(data));
