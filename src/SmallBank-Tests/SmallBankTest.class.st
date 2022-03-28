@@ -5,6 +5,34 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
+SmallBankTest >> testAmplified_1 [
+
+	<madeBySmallAmp>
+	| b |
+	'SmallAmp has derived this test from `SmallBankTest>>#testInit` by regenerating its assertions.
+	This test can:
+	* It detects the injection of an artificial fault (Chnage a message send with #yourself) in `SmallBank>> #rand`:
+		original code snippet: `(1 to: 1000) atRandom`
+		Mutated code snippet: `^ (1 to: 1000) yourself`
+		Dynamic state: nil
+	* It detects the injection of an artificial fault (Remove ^) in `SmallBank>> #rand`:
+		original code snippet: `^ (1 to: 1000) atRandom`
+		Mutated code snippet: `(1 to: 1000) atRandom`
+		Dynamic state: nil
+	* It detects the injection of an artificial fault (Removing all lines in a method) in `SmallBank>> #rand`:
+		original code snippet: `^ (1 to: 1000) atRandom`
+		Mutated code snippet: `rand
+
+	" Flaky detection "
+
+	`
+		Dynamic state: nil
+'.
+	b := SmallBank new.
+	self assert: b rand class equals: SmallInteger
+]
+
+{ #category : #'as yet unclassified' }
 SmallBankTest >> testAmplified_2 [
 
 	"SmallAmp has derived this test from `SmallBankTest>>#testWithdraw` by applying some transformations and regenerating its assertions.
