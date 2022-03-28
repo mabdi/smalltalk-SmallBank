@@ -3,7 +3,6 @@ SmalltalkCISpec {
     SCIMetacelloLoadSpec {
       #baseline : 'SmallBank',
       #directory : 'src',
-      #load : ['default'],
       #platforms : [ #pharo ]
     }
   ]
