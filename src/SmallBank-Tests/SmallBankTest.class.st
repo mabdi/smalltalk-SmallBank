@@ -4,6 +4,35 @@ Class {
 	#category : #'SmallBank-Tests'
 }
 
+{ #category : #'as yet unclassified' }
+SmallBankTest >> testAmplified_3 [
+
+	"SmallAmp has derived this test from `SmallBankTest>>#testWithdraw` by applying some transformations and regenerating its assertions.
+	This test can:
+	* It detects the injection of an artificial fault (Negate a literal boolean) in `SmallBank>> #withdraw:`:
+		original code snippet: `^ true`
+		Mutated code snippet: `^ true`
+		Dynamic state: nil
+	* It detects the injection of an artificial fault (Replace #ifTrue: receiver with true) in `SmallBank>> #withdraw:`:
+		original code snippet: `balance >= amount ifTrue: [ 
+	balance := balance - amount.
+	^ true ]`
+		Mutated code snippet: `true ifTrue: [ 
+	balance := balance - amount.
+	^ true ]`
+		Dynamic state: {#balance->30. #amount->100}
+"
+
+	<madeBySmallAmp>
+	| b aBoolean |
+	b := SmallBank new.
+	aBoolean := b
+		            deposit: 30;
+		            withdraw: 100.
+	self assert: b balance equals: 30.
+	self deny: aBoolean
+]
+
 { #category : #tests }
 SmallBankTest >> testDeposit [
 	| b |
