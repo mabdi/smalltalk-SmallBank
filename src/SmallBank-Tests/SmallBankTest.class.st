@@ -87,6 +87,27 @@ SmallBankTest >> testAmplified__03 [
 	self deny: aBoolean
 ]
 
+{ #category : #'as yet unclassified' }
+SmallBankTest >> testAmplified__04 [
+
+	"SmallAmp has derived this test from `SmallBankTest>>#testWithdraw` by applying some transformations and regenerating its assertions.
+	This test can:
+	* It detects the injection of an artificial fault (Replace #'>=' with #>) in `SmallBank>> #withdraw:`:
+		original code snippet: `balance >= amount`
+		Mutated code snippet: `balance > amount`
+		Dynamic state: {#balance->100. #amount->100}
+"
+
+	<madeBySmallAmp>
+	| b |
+	b := SmallBank new.
+	b
+		deposit: 100;
+		balance;
+		withdraw: 100.
+	self assert: b balance equals: 0
+]
+
 { #category : #tests }
 SmallBankTest >> testDeposit [
 	| b |
