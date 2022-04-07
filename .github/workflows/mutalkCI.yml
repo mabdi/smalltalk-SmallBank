@@ -161,11 +161,3 @@ jobs:
                   }
                 }
               )
-      - name: failure message
-        if: ${{ failure() }}
-        with:
-          text: "Evaluation failed because."
-      - name: success message
-        if: ${{ success() }}
-        with:
-          text: ":heavy_check_mark: eval success :heavy_check_mark:"
