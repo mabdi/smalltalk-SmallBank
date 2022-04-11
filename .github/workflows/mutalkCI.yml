@@ -13,14 +13,14 @@ on:
 
   workflow_dispatch:
     inputs:
-        mode:
-          description: 'modes: full (run on all project), diff (run on the last commit diff), commit (especify a commit to calculate diff)'
-          required: true
-          default: 'full'
-        commit:
-          description: 'If mode == commit, here you enter the Commid id/name/shortId to evaluate the diff'
-          required: false
-          default: ''
+      mode:
+        description: 'modes: full (run on all project), diff (run on the last commit diff), commit (especify a commit to calculate diff)'
+        required: true
+        default: 'full'
+      commit:
+        description: 'If mode == commit, here you enter the Commid id/name/shortId to evaluate the diff'
+        required: false
+        default: ''
 
 jobs:
   eventBased:
@@ -29,7 +29,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-           fetch-depth: 0
+          fetch-depth: 0
 
       - uses: hpi-swa/setup-smalltalkCI@v1
         id: smalltalkci
@@ -42,7 +42,7 @@ jobs:
 
       - run: ${{env.SMALLTALK_CI_VM}} ${{env.SMALLTALK_CI_IMAGE}} metacello install "github://mabdi/mutalk/src" BaselineOfMuTalk
         shell: bash
-      
+
       - run: ${{env.SMALLTALK_CI_VM}} ${{env.SMALLTALK_CI_IMAGE}} mutalk --project=${{github.event.repository.name}} --diff
         shell: bash
 
@@ -84,31 +84,31 @@ jobs:
                   }
                 }
               )
-            
-         
+  
+
   manual:
     runs-on: ubuntu-latest
     if: github.event_name == 'workflow_dispatch'
     steps:
       - uses: actions/checkout@v2
         with:
-           fetch-depth: 0
+          fetch-depth: 0
 
       - uses: hpi-swa/setup-smalltalkCI@v1
         id: smalltalkci
         with:
           smalltalk-version: Pharo64-stable
-            
+
       - run: smalltalkci -s ${{ steps.smalltalkci.outputs.smalltalk-version }}
         shell: bash
         timeout-minutes: 15
-        
+
       - run: ${{env.SMALLTALK_CI_VM}} ${{env.SMALLTALK_CI_IMAGE}} metacello install "github://mabdi/mutalk/src" BaselineOfMuTalk
         shell: bash
 
       - name: full mutation testing
         if: github.event.inputs.mode == 'full'
-        run: ${{env.SMALLTALK_CI_VM}} ${{env.SMALLTALK_CI_IMAGE}} mutalk --project=${{github.event.repository.name}} 
+        run: ${{env.SMALLTALK_CI_VM}} ${{env.SMALLTALK_CI_IMAGE}} mutalk --project=${{github.event.repository.name}}
 
       - name: diff mutation testing
         if: github.event.inputs.mode == 'diff'
@@ -151,7 +151,7 @@ jobs:
                     throw new Error(error);
                   }
                   try {
-                    if (data.done) {
+                    if (data.status === "OK") {
                       core.setOutput('coveralls-api-result', JSON.stringify(data));
                     } else {
                       throw new Error(JSON.stringify(data));

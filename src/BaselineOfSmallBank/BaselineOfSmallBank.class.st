@@ -13,5 +13,7 @@ BaselineOfSmallBank >> baseline: spec [
 			spec package: 'SmallAmpCI-Tests'.
 			spec
 				package: 'SmallBank-Tests'
-				with: [ spec requires: #('SmallBank') ] ]
+				with: [ spec requires: #('SmallBank') ].
+			spec group: 'default' with: #('SmallBank-Tests');
+			group: 'full' with: #( 'SmallBank-Tests' 'SmallAmpCI-Tests' ). ]
 ]
