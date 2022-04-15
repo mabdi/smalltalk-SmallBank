@@ -52,6 +52,32 @@ nil	* It detects the injection of an artificial fault (Chnage a message send wit
 	self assert: b rand class equals: SmallInteger
 ]
 
+{ #category : #'as yet unclassified' }
+SmallBankTest >> testAmplified_0_3 [
+
+	"SmallAmp has derived this test from `SmallBankTest>>#testWithdraw` by regenerating its assertions.
+	This test can:
+	* It detects the injection of an artificial fault (Negate a literal boolean) in `SmallBank>> #withdraw:`:
+		original code snippet: `^ false`
+		Mutated code snippet: `^ false`
+		Dynamic state: nil
+	* It detects the injection of an artificial fault (Remove ^) in `SmallBank>> #withdraw:`:
+		original code snippet: `^ true`
+		Mutated code snippet: `balance := balance - amount.
+true`
+		Dynamic state: nil
+"
+
+	<madeBySmallAmp: 'Amplified_0_3'>
+	| b aBoolean |
+	b := SmallBank new.
+	self assert: b rand class equals: SmallInteger.
+	aBoolean := b
+		            deposit: 100;
+		            withdraw: 30.
+	self assert: aBoolean
+]
+
 { #category : #tests }
 SmallBankTest >> testDeposit [
 	| b |
